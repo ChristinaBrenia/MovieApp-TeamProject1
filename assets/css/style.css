@@ -1,0 +1,54 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+:root {
+    --teal: #43FFF4;
+    --pink: #FF87EC;
+    --background: #2B0129;
+    --grey: #C4C4C4;
+
+    background-color: var(--background);
+}
+
+body{
+    
+   
+}
+
+
+.uk-navbar-left {
+    background-color: var(--background);
+    border-bottom: 0.1rem solid var(--teal);
+    
+}
+.uk-navbar-nav > li.uk-active > a {
+    color: var(--background);
+    background-color:var(--teal);
+}
+.uk-container .uk-container-small {
+    text-align: center;
+    color: var(--grey);
+    padding:2rem;
+}
+
+.uk-container .uk-container-large {
+    text-align: center;
+}
+/* Your time is valuable text*/
+.pink-text {
+    color: var(--pink);
+    font-size: 1.5rem;
+}
+
+.teal-text {
+    color: var(--teal);
+    border-bottom: solid 1px var(--grey);
+    padding-bottom: 0.2rem;
+}
