@@ -18,7 +18,6 @@
 }
 
 body{
-    
    
 }
 
@@ -45,10 +44,12 @@ body{
 .pink-text {
     color: var(--pink);
     font-size: 1.5rem;
+    font-family: 'Poppins', sans-serif;
 }
 
 .teal-text {
     color: var(--teal);
     border-bottom: solid 1px var(--grey);
     padding-bottom: 0.2rem;
+    font-family: 'Poppins', sans-serif;
 }
