@@ -4,6 +4,7 @@
 var movieSearchEl = "Inception trailer";
 movieSearchEl = movieSearchEl.replace(/ /g, "+");
 
+//var youtubeApiKey = "";
 
 //create api url
 var youtubeDataApiURL = "https://www.googleapis.com/youtube/v3/search?part=id&key=" + youtubeApiKey + "&q=" + movieSearchEl;
