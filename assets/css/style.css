@@ -21,12 +21,11 @@ body{
    
 }
 
-
-.uk-navbar-left {
+.uk-navbar-container {
     background-color: var(--background);
-    border-bottom: 0.1rem solid var(--teal);
-    
+    border-bottom: 0.1rem solid var(--teal); 
 }
+
 .uk-navbar-nav > li.uk-active > a {
     color: var(--background);
     background-color:var(--teal);
