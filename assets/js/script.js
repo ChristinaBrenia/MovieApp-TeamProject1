@@ -1,5 +1,8 @@
 var trailerEl = document.querySelector("#youtube-trailer");
 
+/*This section of code was created using https://developers.google.com/youtube/iframe_api_reference
+*It creates the youtube IFrame element and places and youtube video player in that element onto the page
+*/
 //load the IFrame API code asynchronously
 var tag = document.createElement("script");
 
@@ -13,14 +16,7 @@ function onYouTubeIframeAPIReady(){
     player = new YT.Player('youtube-trailer', {
         height: '390',
         width: '640',
-        videoId: 'YoHD9XEInc0',
-        events: {
-            'onReady': onPlayerReady
-        }
+        videoId: 'YoHD9XEInc0'
     });
 }
-
-//the api will call this function when the video player is ready
-function onPlayerReady(event) {
-    event.target.playVideo();
-}
+/*End section using https://developers.google.com/youtube/iframe_api_reference example code*/
