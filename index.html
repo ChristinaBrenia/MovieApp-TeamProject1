@@ -27,24 +27,27 @@
     <!-- Welcome Section Begin-->
     <div class="uk-section uk-position-top-center">
         <div class="uk-container uk-container-large uk-flex">
-                <span class="fas fa-ticket-alt fa-7x"></span>
+                <span class="fas fa-ticket-alt fa-7x" style='color:#62E9EB;'></span>
                 <div class="uk-margin-small-left uk-margin-auto-vertical">
-                    <h2 class="pink-text uk-margin-remove-vertical uk-text-italic">Your Time Is Valuable</h2>
+                    <h2 class="pink-text uk-margin-remove-vertical">Your Time Is Valuable</h2>
                     <h3 class="teal-text uk-margin-remove-vertical">don't waste it on crappy movies</h3>
                 </div>
         </div>
 
-        <div class="uk-container uk-container-small">
+        <div class="uk-container uk-container-small" style='font-size:0.86rem; text-align:right; font-family:Poppins,sans-serif;'>
             We provide you with what you need to decide if a movie is worth your time
         </div>
 
         <div class="uk-container uk-container-small uk-text-center">
-                <p class="uk-margin-remove-bottom uk-margin-small-top">WHAT MOVIE DO YOU WANT TO WATCH?</p>
+            <!-- Expand the container in order to make the following text bigger -->
+                <p class="uk-margin-remove-bottom uk-margin-small-top" style='padding:10%; font-size:1.34rem; font-family:Poppins,sans-serif; font-weight:bold;'>WHAT MOVIE DO YOU WANT TO WATCH?</p>
                 <form class="uk-search uk-search-default uk-width-1-2">
                     <span uk-search-icon></span>
-                    <input id="movie-search" class="uk-search-input" type="search" placeholder="Search...">
+                    <!--Can't figure out how to change the color of the text inside of the search bar and 
+                        widen the search bar length to make it more pleasing to the eye-->
+                    <input id="movie-search" class="uk-search-input" type="search" placeholder="Movie Name" style='font-family:Poppins,sans-serif; background-color:white; color:#2B0129;'>
                 </form>
-        </div>  
+    </div>  
 
         <div id="youtube-trailer" class="uk-margin-large-top"></div>
     </div>
