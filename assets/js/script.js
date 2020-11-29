@@ -1,4 +1,6 @@
 //global variables
+//variable for OMDB API key
+var omdbKey = "cefb15b1";
 var movieInput = document.querySelector("#movie-search");
 var searchedVideoId; //create global variabe for the searched videoid
 
@@ -52,10 +54,24 @@ function submitMovieHandler(event){
 
         var movie = movieInput.value;
         movieInput.value = "";
+        console.log(movie);
 
         getMovieTrailer(movie);
+        //AJZ calling OMDB api and passing it the movie title searched for
+        callOmdb(movie,omdbKey);
+
     }
 }
+
+// AJZ working on function to call OMDB and return info on a movie
+var callOmdb = function(movie, apiKeyOmdb){
+    var omdbUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
+    fetch(omdbUrl).then(function(response){
+        console.log(response.json());
+        //return response.json();
+    })
+};
+//AJZ test hard coding a movie into callOmdb function
 
 //must use keydown for event listener to prevent page from refreshing on enter key pressed
 movieInput.addEventListener("keydown", submitMovieHandler);
