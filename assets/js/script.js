@@ -3,7 +3,7 @@
 var omdbKey = "cefb15b1";
 var movieInput = document.querySelector("#movie-search");
 var searchedVideoId; //create global variabe for the searched videoid
-
+var movieInfo = document.querySelector ("#movie-info");
 /*Use the youtube data api to collect video info for the movie search term*/
 //get entered search term
 //var youtubeApiKey = "";
@@ -14,7 +14,7 @@ function getMovieTrailer(movie){
 
     movie += " trailer";
     movie = movie.replace(/ /g, "+");
-    //create api url
+    //AJZ create api url
     var youtubeDataApiURL = "https://www.googleapis.com/youtube/v3/search?part=id&key=" + youtubeApiKey + "&q=" + movie;
 
     //fetch youtube data
@@ -56,7 +56,7 @@ function submitMovieHandler(event){
         movieInput.value = "";
         console.log(movie);
 
-        getMovieTrailer(movie);
+        //getMovieTrailer(movie);
         //AJZ calling OMDB api and passing it the movie title searched for
         callOmdb(movie,omdbKey);
 
@@ -67,8 +67,18 @@ function submitMovieHandler(event){
 var callOmdb = function(movie, apiKeyOmdb){
     var omdbUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
     fetch(omdbUrl).then(function(response){
-        console.log(response.json());
-        //return response.json();
+        return response.json();
+    }).then(function(data){
+        //AJZ creating elements to display information about the movie
+        console.log(data);// test purpose remove from final revision
+        var plotInfo = document.createElement("p"); //AJZ plot
+        var moviePoster = document.createElement("img"); //AJZ movie poster
+        plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
+        moviePoster.setAttribute("src",data.Poster); //AJZ poster
+        console.log(data.Poster);
+        movieInfo.appendChild(plotInfo);//AJZ plot
+        movieInfo.appendChild(moviePoster);//AJZ poster
+
     })
 };
 //AJZ test hard coding a movie into callOmdb function
