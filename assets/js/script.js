@@ -65,12 +65,15 @@ function submitMovieHandler(event){
 
 // AJZ working on function to call OMDB and return info on a movie
 var callOmdb = function(movie, apiKeyOmdb){
+    movieInfo.innerHTML="";//AJZ clearing previous search results 
     var omdbUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
     fetch(omdbUrl).then(function(response){
         return response.json();
     }).then(function(data){
         //AJZ creating elements to display information about the movie
         console.log(data);// test purpose remove from final revision
+        var movieTitle = document.createElement("h1");//AJZ movie title
+        var ratingAndRun = document.createElement("h2");//AJZ movie rating and runtime
         var plotInfo = document.createElement("p"); //AJZ plot
         var castList = document.createElement("div"); //AJZ cast list
         var moviePoster = document.createElement("img"); //AJZ movie poster
@@ -78,14 +81,18 @@ var callOmdb = function(movie, apiKeyOmdb){
         var castRoster = new Array();
         castRoster = data.Actors.split(",");
         for(var i = 0; i < castRoster.length; i++){
-            var cast = document.createElement("h3");
+            var cast = document.createElement("h4");
             cast.textContent = castRoster[i];
             castList.appendChild(cast);
         }
         console.log(castRoster);
+        movieTitle.textContent = JSON.stringify(data.Title + " " + data.Year); //AJZ movie title
+        ratingAndRun.textContent = JSON.stringify("Rated: " + data.Rated + " Runtime: " + data.Runtime);//AJZ rating and runtime
         plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
         moviePoster.setAttribute("src",data.Poster); //AJZ poster
         console.log(data.Poster);
+        movieInfo.appendChild(movieTitle);//AJZ movie title
+        movieInfo.appendChild(ratingAndRun);//AJZ movie rating and runtime
         movieInfo.appendChild(plotInfo);//AJZ plot
         movieInfo.appendChild(moviePoster);//AJZ poster
         movieInfo.appendChild(castList);//AJZ cast list
