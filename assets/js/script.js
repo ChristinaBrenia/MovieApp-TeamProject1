@@ -72,12 +72,23 @@ var callOmdb = function(movie, apiKeyOmdb){
         //AJZ creating elements to display information about the movie
         console.log(data);// test purpose remove from final revision
         var plotInfo = document.createElement("p"); //AJZ plot
+        var castList = document.createElement("div"); //AJZ cast list
         var moviePoster = document.createElement("img"); //AJZ movie poster
+        //getting cast list and making an array of names
+        var castRoster = new Array();
+        castRoster = data.Actors.split(",");
+        for(var i = 0; i < castRoster.length; i++){
+            var cast = document.createElement("h3");
+            cast.textContent = castRoster[i];
+            castList.appendChild(cast);
+        }
+        console.log(castRoster);
         plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
         moviePoster.setAttribute("src",data.Poster); //AJZ poster
         console.log(data.Poster);
         movieInfo.appendChild(plotInfo);//AJZ plot
         movieInfo.appendChild(moviePoster);//AJZ poster
+        movieInfo.appendChild(castList);//AJZ cast list
 
     })
 };
