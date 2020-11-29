@@ -18,7 +18,7 @@
 }
 
 body{
-   
+   color: #C4C6C6;
 }
 
 .uk-navbar-container {
@@ -30,6 +30,7 @@ body{
     color: var(--background);
     background-color:var(--teal);
 }
+/* this is not reacting to any changes. the body tag above is what is changing colors */
 .uk-container .uk-container-small {
     text-align: center;
     color: var(--grey);
@@ -42,8 +43,9 @@ body{
 /* Your time is valuable text*/
 .pink-text {
     color: var(--pink);
-    font-size: 1.5rem;
+    font-size: 2.25rem;
     font-family: 'Poppins', sans-serif;
+    text-align: center;
 }
 
 .teal-text {
@@ -51,4 +53,5 @@ body{
     border-bottom: solid 1px var(--grey);
     padding-bottom: 0.2rem;
     font-family: 'Poppins', sans-serif;
+    text-align: center;
 }
