@@ -1,20 +1,19 @@
 //global variables
 //variable for OMDB API key
-var omdbKey = "cefb15b1";
+var apiKeyOmdb = "cefb15b1";
 var movieInput = document.querySelector("#movie-search");
 var searchedVideoId; //create global variabe for the searched videoid
 var movieInfo = document.querySelector ("#movie-info");
 /*Use the youtube data api to collect video info for the movie search term*/
 //get entered search term
-//var youtubeApiKey = "";
+var youtubeApiKey = "AIzaSyA4BlhB5mPVahDpSC1lLhrGoTy2vI2eEdI";
 
 function getMovieTrailer(movie){
     var trailerContentEl = document.querySelector("#youtube-trailer");
-    console.dir(trailerContentEl);
 
     movie += " trailer";
     movie = movie.replace(/ /g, "+");
-    //AJZ create api url
+    //create api url
     var youtubeDataApiURL = "https://www.googleapis.com/youtube/v3/search?part=id&key=" + youtubeApiKey + "&q=" + movie;
 
     //fetch youtube data
@@ -54,17 +53,17 @@ function submitMovieHandler(event){
 
         var movie = movieInput.value;
         movieInput.value = "";
-        console.log(movie);
+
+        //AJZ calling OMDB api and passing it the movie title searched for
+        callOmdb(movie);
 
         //getMovieTrailer(movie);
-        //AJZ calling OMDB api and passing it the movie title searched for
-        callOmdb(movie,omdbKey);
 
     }
 }
 
 // AJZ working on function to call OMDB and return info on a movie
-var callOmdb = function(movie, apiKeyOmdb){
+var callOmdb = function(movie){
     movieInfo.innerHTML="";//AJZ clearing previous search results 
     var omdbUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
     fetch(omdbUrl).then(function(response){
@@ -99,7 +98,6 @@ var callOmdb = function(movie, apiKeyOmdb){
 
     })
 };
-//AJZ test hard coding a movie into callOmdb function
 
 //must use keydown for event listener to prevent page from refreshing on enter key pressed
 movieInput.addEventListener("keydown", submitMovieHandler);
