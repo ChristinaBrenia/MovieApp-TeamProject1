@@ -30,17 +30,7 @@ body{
     color: var(--background);
     background-color:var(--teal);
 }
-/* this is not reacting to any changes. the body tag above is what is changing colors */
-.uk-container .uk-container-small {
-    text-align: center;
-    color: var(--grey);
-    padding:2rem;
-}
 
-.uk-container .uk-container-large {
-    text-align: center;
-}
-/* Your time is valuable text*/
 .pink-text {
     color: var(--pink);
     font-size: 2.25rem;

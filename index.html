@@ -25,8 +25,8 @@
     </header>
 
     <!-- Welcome Section Begin-->
-    <div class="uk-section uk-position-top-center">
-        <div class="uk-container uk-container-large uk-flex">
+    <div class="uk-section uk-padding-remove">
+        <div class="uk-container uk-flex uk-flex-center">
                 <span class="fas fa-ticket-alt fa-7x" style='color:#62E9EB;'></span>
                 <div class="uk-margin-small-left uk-margin-auto-vertical">
                     <h2 class="pink-text uk-margin-remove-vertical">Your Time Is Valuable</h2>
@@ -34,13 +34,13 @@
                 </div>
         </div>
 
-        <div class="uk-container uk-container-small" style='font-size:0.86rem; text-align:right; font-family:Poppins,sans-serif;'>
+        <div class="uk-container uk-container-small uk-text-center" style='font-size:0.86rem; font-family:Poppins,sans-serif;'>
             We provide you with what you need to decide if a movie is worth your time
         </div>
 
         <div class="uk-container uk-container-small uk-text-center">
             <!-- Expand the container in order to make the following text bigger -->
-                <p class="uk-margin-remove-bottom uk-margin-small-top" style='padding:10%; font-size:1.34rem; font-family:Poppins,sans-serif; font-weight:bold;'>WHAT MOVIE DO YOU WANT TO WATCH?</p>
+                <p class="uk-margin-remove-bottom uk-margin-small-top" style='font-size:1.34rem; font-family:Poppins,sans-serif; font-weight:bold;'>WHAT MOVIE DO YOU WANT TO WATCH?</p>
                 <form class="uk-search uk-search-default uk-width-1-2">
                     <span uk-search-icon></span>
                     <!--Can't figure out how to change the color of the text inside of the search bar and 
@@ -48,9 +48,14 @@
                     <input id="movie-search" class="uk-search-input" type="search" placeholder="Movie Name" style='font-family:Poppins,sans-serif; background-color:white; color:#2B0129;'>
                 </form>
         </div>  
-        <div id="movie-info">
+    </div>
+    
+    <div id="movie-modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-width-auto">
+            <button class="uk-modal-close-outside" type="button" uk-close></button>
+            <div id="movie-info" class="uk-container"></div>
+            <div id="youtube-trailer" class="uk-container uk-margin-large-top" uk-video></div>
         </div>
-        <div id="youtube-trailer" class="uk-margin-large-top"></div>
     </div>
 
     
