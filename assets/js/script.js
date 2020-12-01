@@ -10,6 +10,7 @@ var youtubeApiKey = "";
 
 function getMovieTrailer(movie){
     var trailerContentEl = document.querySelector("#youtube-trailer");
+    trailerContentEl.src = "";
 
     movie += " trailer";
     movie = movie.replace(/ /g, "+");
@@ -43,8 +44,9 @@ function onYouTubeIframeAPIReady(){
     player = new YT.Player('youtube-trailer', {
         height: '390',
         width: '640',
-        videoId: searchedVideoId
+        videoId: searchedVideoId,
     });
+    document.getElementById("youtube-trailer").setAttribute("uk-video","").setAttribute("uk-responsive","");
 }
 
 function submitMovieHandler(event){
@@ -59,6 +61,7 @@ function submitMovieHandler(event){
 
         getMovieTrailer(movie);
 
+        UIkit.modal(document.getElementById("movie-modal")).show();
     }
 }
 
@@ -70,7 +73,7 @@ var callOmdb = function(movie){
         return response.json();
     }).then(function(data){
         //AJZ creating elements to display information about the movie
-        console.log(data);// test purpose remove from final revision
+
         var movieTitle = document.createElement("h1");//AJZ movie title
         var ratingAndRun = document.createElement("h2");//AJZ movie rating and runtime
         var plotInfo = document.createElement("p"); //AJZ plot

@@ -50,9 +50,12 @@
         </div>  
     </div>
     
-    <div class="uk-section">
-        <div id="movie-info" class="uk-container"></div>
-        <div id="youtube-trailer" class="uk-container uk-margin-large-top"></div>
+    <div id="movie-modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-width-auto">
+            <button class="uk-modal-close-outside" type="button" uk-close></button>
+            <div id="movie-info" class="uk-container"></div>
+            <div id="youtube-trailer" class="uk-container uk-margin-large-top" uk-video></div>
+        </div>
     </div>
 
     
