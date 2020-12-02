@@ -124,6 +124,7 @@ function displayMovieHistory(){
     searchHistoryContainer.innerHTML = "";
     for (var i=1; i<= movieHistoryArr.length; i++){
         var buttonEl = document.createElement("button");
+        buttonEl.classList.add("uk-text-capitalize");
         buttonEl.setAttribute("searched-movie", movieHistoryArr[movieHistoryArr.length-i]);
         buttonEl.textContent = movieHistoryArr[movieHistoryArr.length-i];
 
