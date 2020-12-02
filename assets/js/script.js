@@ -3,12 +3,12 @@
 var apiKeyOmdb = "cefb15b1";
 var movieInput = document.querySelector("#movie-search");
 var searchedVideoId; //create global variabe for the searched videoid
-var movieInfo = document.querySelector ("#movie-info");
+var movieInfo = document.querySelector("#movie-info");
 /*Use the youtube data api to collect video info for the movie search term*/
 //get entered search term
 var youtubeApiKey = "";
 
-function getMovieTrailer(movie){
+function getMovieTrailer(movie) {
     var trailerContentEl = document.querySelector("#youtube-trailer");
     trailerContentEl.src = "";
 
@@ -18,13 +18,13 @@ function getMovieTrailer(movie){
     var youtubeDataApiURL = "https://www.googleapis.com/youtube/v3/search?part=id&key=" + youtubeApiKey + "&q=" + movie;
 
     //fetch youtube data
-    fetch(youtubeDataApiURL).then(function(response){
+    fetch(youtubeDataApiURL).then(function (response) {
         return response.json()
-    }).then(function(youtubeData){
+    }).then(function (youtubeData) {
         searchedVideoId = youtubeData.items[0].id.videoId;
 
         //if first time fetching trailer create iframe element
-        if (trailerContentEl.tagName === "DIV"){
+        if (trailerContentEl.tagName === "DIV") {
             //load the IFrame API code asynchronously after the searched video id info has been fetched
             var tag = document.createElement("script");
 
@@ -40,17 +40,17 @@ function getMovieTrailer(movie){
 
 //create an <iframe> (and youtube player) after the api code downloads. Must be outside of fetch so the IFrame api can call this function when the code is ready
 var player;
-function onYouTubeIframeAPIReady(){
+function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-trailer', {
         height: '390',
         width: '640',
         videoId: searchedVideoId,
     });
-    document.getElementById("youtube-trailer").setAttribute("uk-video","").setAttribute("uk-responsive","");
+    document.getElementById("youtube-trailer").setAttribute("uk-video", "").setAttribute("uk-responsive", "");
 }
 
-function submitMovieHandler(event){
-    if(event.keyCode === 13){
+function submitMovieHandler(event) {
+    if (event.keyCode === 13) {
         event.preventDefault();
 
         var movie = movieInput.value;
@@ -66,38 +66,43 @@ function submitMovieHandler(event){
 }
 
 // AJZ working on function to call OMDB and return info on a movie
-var callOmdb = function(movie){
-    movieInfo.innerHTML="";//AJZ clearing previous search results 
+var callOmdb = function (movie) {
+    movieInfo.innerHTML = "";//AJZ clearing previous search results 
     var omdbUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
-    fetch(omdbUrl).then(function(response){
+    fetch(omdbUrl).then(function (response) {
         return response.json();
-    }).then(function(data){
+    }).then(function (data) {
         //AJZ creating elements to display information about the movie
 
         var movieTitle = document.createElement("h1");//AJZ movie title
-        var ratingAndRun = document.createElement("h2");//AJZ movie rating and runtime
+        var rating = document.createElement("li");//AJZ movie rating and runtime
+        var AndRun = document.createElement("li");//AJZ movie rating and runtime
         var plotInfo = document.createElement("p"); //AJZ plot
         var castList = document.createElement("div"); //AJZ cast list
         var moviePoster = document.createElement("img"); //AJZ movie poster
         //getting cast list and making an array of names
         var castRoster = new Array();
         castRoster = data.Actors.split(",");
-        for(var i = 0; i < castRoster.length; i++){
+        for (var i = 0; i < castRoster.length; i++) {
             var cast = document.createElement("h4");
             cast.textContent = castRoster[i];
             castList.appendChild(cast);
         }
 
         movieTitle.textContent = JSON.stringify(data.Title + " " + data.Year); //AJZ movie title
-        ratingAndRun.textContent = JSON.stringify("Rated: " + data.Rated + " Runtime: " + data.Runtime);//AJZ rating and runtime
+        rating.textContent = JSON.stringify("Rated: " + data.Rated);//AJZ rating and runtime
+        AndRun.textContent = JSON.stringify("Runtime: " + data.Runtime);//AJZ rating and runtime
         plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
-        moviePoster.setAttribute("src",data.Poster); //AJZ poster
+        moviePoster.setAttribute("src", data.Poster); //AJZ poster
 
         movieInfo.appendChild(movieTitle);//AJZ movie title
-        movieInfo.appendChild(ratingAndRun);//AJZ movie rating and runtime
-        movieInfo.appendChild(plotInfo);//AJZ plot
+        movieInfo.appendChild(rating);//AJZ movie rating and runtime
+        movieInfo.appendChild(AndRun);//AJZ movie rating and runtime
         movieInfo.appendChild(moviePoster);//AJZ poster
+        movieInfo.appendChild(plotInfo);//AJZ plot
+
         movieInfo.appendChild(castList);//AJZ cast list
+
 
     })
 };

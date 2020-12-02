@@ -26,14 +26,24 @@ body{
     border-bottom: 0.1rem solid var(--teal); 
 }
 
+/* Remove this after done - pretty sure it does nothing
 .uk-navbar-nav > li.uk-active > a {
     color: var(--background);
     background-color:var(--teal);
+} */
+
+.uk-button-primary {
+    background-color: var(--teal);
+    color: var(--background);
+}
+.uk-button-primary:hover {
+    background-color: var(--pink);
+    color: var(--background);
 }
 
 .pink-text {
     color: var(--pink);
-    font-size: 2.25rem;
+    font-size: 2rem;
     font-family: 'Poppins', sans-serif;
     text-align: center;
 }
@@ -44,4 +54,63 @@ body{
     padding-bottom: 0.2rem;
     font-family: 'Poppins', sans-serif;
     text-align: center;
+}
+.uk-search-input {
+    border-radius: 0.5rem;
+}
+
+.uk-width-1-2 {
+    width: 75%;
+}
+
+/* Modal Styleing*/
+#movie-modal {
+    background-color: #000000d9;
+}
+#movie-info h1 {
+ color:var(--pink);
+ padding: 0%;
+ margin: 0%;
+ width:50%;
+}
+#movie-info li {
+    color: var(--teal);
+    list-style: none;
+}
+#movie-info p {
+    width: 100%;
+}
+#movie-info img {
+    float: left;
+    padding: 0 1rem;
+}
+.uk-modal-body {
+    background: black;
+    border: var(--teal) solid 0.1rem;
+    border-radius: 1rem;
+}
+#movie-modal .uk-icon {
+    color: var(--teal);
+}
+#movie-modal .uk-icon:hover {
+    color: var(--pink);
+  
+}
+/* modal button styling over-ride from UI Kit CSS*/
+.button-width {
+    box-sizing: border-box;
+    width: 50%;
+    max-width: 100%;
+}
+.uk-margin-small-bottom {
+    margin-bottom: 10px !important;
+    float: right;
+    color: var(--teal);
+    border:0.1rem solid var(--teal);
+    border-radius: 0.5rem; 
+}
+.uk-margin-small-bottom:hover {
+    border:0.1rem solid var(--pink);
+    color: var(--pink);
+    transform: scale(1.1);
 }
