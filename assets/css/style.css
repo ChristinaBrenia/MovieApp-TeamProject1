@@ -84,6 +84,11 @@ body{
     float: left;
     padding: 0 1rem;
 }
+
+#movie-info h4 {
+    color: white;
+}
+
 .uk-modal-body {
     background: black;
     border: var(--teal) solid 0.1rem;
