@@ -1,30 +1,31 @@
 //global variables
-//variable for OMDB API key
-var omdbKey = "cefb15b1";
+var apiKeyOmdb = "cefb15b1";
 var movieInput = document.querySelector("#movie-search");
 var searchedVideoId; //create global variabe for the searched videoid
-var movieInfo = document.querySelector ("#movie-info");
-/*Use the youtube data api to collect video info for the movie search term*/
-//get entered search term
-//var youtubeApiKey = "";
+var movieInfo = document.querySelector("#movie-info");
+var searchHistoryContainer = document.querySelector("#search-history");
+var movieHistoryArr = JSON.parse(localStorage.getItem("movieHistory")) || []; //get history from local storage or initialize array
 
-function getMovieTrailer(movie){
+/*Use the youtube data api to collect video info for the movie search term*/
+var youtubeApiKey = "";
+
+function getMovieTrailer(movie) {
     var trailerContentEl = document.querySelector("#youtube-trailer");
-    console.dir(trailerContentEl);
+    trailerContentEl.src = "";
 
     movie += " trailer";
     movie = movie.replace(/ /g, "+");
-    //AJZ create api url
+    //create api url
     var youtubeDataApiURL = "https://www.googleapis.com/youtube/v3/search?part=id&key=" + youtubeApiKey + "&q=" + movie;
 
     //fetch youtube data
-    fetch(youtubeDataApiURL).then(function(response){
+    fetch(youtubeDataApiURL).then(function (response) {
         return response.json()
-    }).then(function(youtubeData){
+    }).then(function (youtubeData) {
         searchedVideoId = youtubeData.items[0].id.videoId;
 
         //if first time fetching trailer create iframe element
-        if (trailerContentEl.tagName === "DIV"){
+        if (trailerContentEl.tagName === "DIV") {
             //load the IFrame API code asynchronously after the searched video id info has been fetched
             var tag = document.createElement("script");
 
@@ -40,66 +41,118 @@ function getMovieTrailer(movie){
 
 //create an <iframe> (and youtube player) after the api code downloads. Must be outside of fetch so the IFrame api can call this function when the code is ready
 var player;
-function onYouTubeIframeAPIReady(){
+function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-trailer', {
         height: '390',
         width: '640',
-        videoId: searchedVideoId
+        videoId: searchedVideoId,
     });
+    document.getElementById("youtube-trailer").setAttribute("uk-video", "").setAttribute("uk-responsive", "");
 }
 
-function submitMovieHandler(event){
-    if(event.keyCode === 13){
+function submitMovieHandler(event) {
+    if (event.keyCode === 13) {
         event.preventDefault();
 
         var movie = movieInput.value;
         movieInput.value = "";
-        console.log(movie);
 
-        //getMovieTrailer(movie);
         //AJZ calling OMDB api and passing it the movie title searched for
-        callOmdb(movie,omdbKey);
-
+        callOmdb(movie);
+       // getMovieTrailer(movie);
+        saveMovieHistory(movie);
+        UIkit.modal(document.getElementById("movie-modal")).show();
     }
 }
 
 // AJZ working on function to call OMDB and return info on a movie
-var callOmdb = function(movie, apiKeyOmdb){
-    movieInfo.innerHTML="";//AJZ clearing previous search results 
-    var omdbUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
-    fetch(omdbUrl).then(function(response){
+var callOmdb = function (movie) {
+    movieInfo.innerHTML = "";//AJZ clearing previous search results 
+    var omdbUrl = "https://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
+    fetch(omdbUrl).then(function (response) {
+        //console.log(response.json());
         return response.json();
-    }).then(function(data){
+    }).then(function (data) {
+        //AJZ seeing if the API returned a valid response
+        if (data.Response === "True"){
         //AJZ creating elements to display information about the movie
-        console.log(data);// test purpose remove from final revision
         var movieTitle = document.createElement("h1");//AJZ movie title
-        var ratingAndRun = document.createElement("h2");//AJZ movie rating and runtime
+        var rating = document.createElement("li");//AJZ movie rating and runtime
+        var AndRun = document.createElement("li");//AJZ movie rating and runtime
         var plotInfo = document.createElement("p"); //AJZ plot
         var castList = document.createElement("div"); //AJZ cast list
         var moviePoster = document.createElement("img"); //AJZ movie poster
         //getting cast list and making an array of names
         var castRoster = new Array();
         castRoster = data.Actors.split(",");
-        for(var i = 0; i < castRoster.length; i++){
+        for (var i = 0; i < castRoster.length; i++) {
             var cast = document.createElement("h4");
             cast.textContent = castRoster[i];
             castList.appendChild(cast);
         }
-        console.log(castRoster);
-        movieTitle.textContent = JSON.stringify(data.Title + " " + data.Year); //AJZ movie title
-        ratingAndRun.textContent = JSON.stringify("Rated: " + data.Rated + " Runtime: " + data.Runtime);//AJZ rating and runtime
-        plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
-        moviePoster.setAttribute("src",data.Poster); //AJZ poster
-        console.log(data.Poster);
-        movieInfo.appendChild(movieTitle);//AJZ movie title
-        movieInfo.appendChild(ratingAndRun);//AJZ movie rating and runtime
-        movieInfo.appendChild(plotInfo);//AJZ plot
-        movieInfo.appendChild(moviePoster);//AJZ poster
-        movieInfo.appendChild(castList);//AJZ cast list
 
+        movieTitle.textContent = JSON.stringify(data.Title + " " + data.Year); //AJZ movie title
+        rating.textContent = JSON.stringify("Rated: " + data.Rated);//AJZ rating and runtime
+        AndRun.textContent = JSON.stringify("Runtime: " + data.Runtime);//AJZ rating and runtime
+        plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
+        moviePoster.setAttribute("src", data.Poster); //AJZ poster
+
+        movieInfo.appendChild(movieTitle);//AJZ movie title
+        movieInfo.appendChild(rating);//AJZ movie rating and runtime
+        movieInfo.appendChild(AndRun);//AJZ movie rating and runtime
+        movieInfo.appendChild(moviePoster);//AJZ poster
+        movieInfo.appendChild(plotInfo);//AJZ plot
+
+        movieInfo.appendChild(castList);//AJZ cast list
+        //AJZ giving error response to user
+    } else {
+        console.log(JSON.stringify(data.Error));
+        var errorMsg = document.createElement("h1");//AJZ error msg
+        errorMsg.textContent = JSON.stringify("Looks like something went wrong: "
+         + data.Error + " Please try again.");//AJZ error msg
+        movieInfo.appendChild(errorMsg);//AJZ error msg
+    }
     })
+
+  
 };
-//AJZ test hard coding a movie into callOmdb function
+
+function saveMovieHistory(movie){
+    var searched = movieHistoryArr.indexOf(movie); //check if movie has already been searched for and return index
+    if (searched>-1) { //if movie was found remove from array
+        movieHistoryArr.splice(searched, 1);
+    }
+    movieHistoryArr.push(movie);
+    if(movieHistoryArr.length>10){ //keep only the 10 most recent searches
+        movieHistoryArr.shift();
+    }
+    localStorage.setItem("movieHistory", JSON.stringify(movieHistoryArr));
+    displayMovieHistory();
+}
+
+function displayMovieHistory(){
+    searchHistoryContainer.innerHTML = "";
+    for (var i=1; i<= movieHistoryArr.length; i++){
+        var buttonEl = document.createElement("button");
+        buttonEl.classList.add("uk-text-capitalize");
+        buttonEl.setAttribute("searched-movie", movieHistoryArr[movieHistoryArr.length-i]);
+        buttonEl.textContent = movieHistoryArr[movieHistoryArr.length-i];
+
+        searchHistoryContainer.appendChild(buttonEl);
+    }
+}
+
+function movieClickHandler(event) {
+    var movie = event.target.getAttribute("searched-movie");
+    if (movie){
+        callOmdb(movie);
+        getMovieTrailer(movie);
+        saveMovieHistory(movie);
+        UIkit.modal(document.getElementById("movie-modal")).show();
+    }
+}
 
 //must use keydown for event listener to prevent page from refreshing on enter key pressed
 movieInput.addEventListener("keydown", submitMovieHandler);
+searchHistoryContainer.addEventListener("click", movieClickHandler);
+displayMovieHistory();
