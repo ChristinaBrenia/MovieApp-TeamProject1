@@ -1,11 +1,12 @@
 //global variables
-//variable for OMDB API key
 var apiKeyOmdb = "cefb15b1";
 var movieInput = document.querySelector("#movie-search");
 var searchedVideoId; //create global variabe for the searched videoid
 var movieInfo = document.querySelector("#movie-info");
+var searchHistoryContainer = document.querySelector("#search-history");
+var movieHistoryArr = JSON.parse(localStorage.getItem("movieHistory")) || []; //get history from local storage or initialize array
+
 /*Use the youtube data api to collect video info for the movie search term*/
-//get entered search term
 var youtubeApiKey = "";
 
 function getMovieTrailer(movie) {
@@ -58,9 +59,8 @@ function submitMovieHandler(event) {
 
         //AJZ calling OMDB api and passing it the movie title searched for
         callOmdb(movie);
-
         getMovieTrailer(movie);
-
+        saveMovieHistory(movie);
         UIkit.modal(document.getElementById("movie-modal")).show();
     }
 }
@@ -68,7 +68,7 @@ function submitMovieHandler(event) {
 // AJZ working on function to call OMDB and return info on a movie
 var callOmdb = function (movie) {
     movieInfo.innerHTML = "";//AJZ clearing previous search results 
-    var omdbUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
+    var omdbUrl = "https://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
     fetch(omdbUrl).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -107,5 +107,42 @@ var callOmdb = function (movie) {
     })
 };
 
+function saveMovieHistory(movie){
+    var searched = movieHistoryArr.indexOf(movie); //check if movie has already been searched for and return index
+    if (searched>-1) { //if movie was found remove from array
+        movieHistoryArr.splice(searched, 1);
+    }
+    movieHistoryArr.push(movie);
+    if(movieHistoryArr.length>10){ //keep only the 10 most recent searches
+        movieHistoryArr.shift();
+    }
+    localStorage.setItem("movieHistory", JSON.stringify(movieHistoryArr));
+    displayMovieHistory();
+}
+
+function displayMovieHistory(){
+    searchHistoryContainer.innerHTML = "";
+    for (var i=1; i<= movieHistoryArr.length; i++){
+        var buttonEl = document.createElement("button");
+        buttonEl.classList.add("uk-text-capitalize");
+        buttonEl.setAttribute("searched-movie", movieHistoryArr[movieHistoryArr.length-i]);
+        buttonEl.textContent = movieHistoryArr[movieHistoryArr.length-i];
+
+        searchHistoryContainer.appendChild(buttonEl);
+    }
+}
+
+function movieClickHandler(event) {
+    var movie = event.target.getAttribute("searched-movie");
+    if (movie){
+        callOmdb(movie);
+        getMovieTrailer(movie);
+        saveMovieHistory(movie);
+        UIkit.modal(document.getElementById("movie-modal")).show();
+    }
+}
+
 //must use keydown for event listener to prevent page from refreshing on enter key pressed
 movieInput.addEventListener("keydown", submitMovieHandler);
+searchHistoryContainer.addEventListener("click", movieClickHandler);
+displayMovieHistory();

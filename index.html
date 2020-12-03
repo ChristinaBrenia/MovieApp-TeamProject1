@@ -55,13 +55,17 @@
                     style='font-family:Poppins,sans-serif; background-color:white; color:#2B0129;'>
             </form>
         </div>
+        <br>
+        <!-- Container to hold recent search history -->
+        <div id="search-history" class="uk-flex uk-flex-center"></div>
+        <div id="top-border"></div>
     </div>
     <!--Movie Modal -->
     <div id="movie-modal" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-width-auto">
 
             <button class="uk-modal-close-outside" type="button" uk-close></button>
-            <button class="uk-button uk-button-default button-width uk-margin-small-bottom">+ to watch list</button>
+            <button id="add-to-watch" class="uk-button uk-button-default button-width uk-margin-small-bottom">+ to watch list</button>
             <div id="movie-info" class="uk-grid-small"></div>
             <div id="youtube-trailer" class="uk-container uk-margin-large-top" uk-video></div>
         </div>
