@@ -119,3 +119,15 @@ body{
     color: var(--pink);
     transform: scale(1.1);
 }
+
+.uk-text-capitalize {
+    background-color: var(--background);
+    color: var(--grey);
+    border: 2px solid var(--teal);
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    margin: 3px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 20px 5px 1px 1px;
+    font-weight: bold;
+}
