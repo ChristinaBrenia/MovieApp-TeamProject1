@@ -23,7 +23,7 @@ body{
 
 .uk-navbar-container {
     background-color: var(--background);
-    border-bottom: 0.1rem solid var(--teal); 
+    border-bottom: 1px solid var(--teal); 
 }
 
 /* Remove this after done - pretty sure it does nothing
@@ -35,10 +35,14 @@ body{
 .uk-button-primary {
     background-color: var(--teal);
     color: var(--background);
+    border-radius: 20px 5px 1px 1px;
+    font-family: 'Poppins', sans-serif;
 }
 .uk-button-primary:hover {
     background-color: var(--pink);
     color: var(--background);
+    border-radius: 20px 1px 1px 1px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .pink-text {
@@ -121,13 +125,25 @@ body{
 }
 
 .uk-text-capitalize {
-    background-color: var(--background);
-    color: var(--grey);
+    background-color: var(--teal);
+    color: var(--background);
     border: 2px solid var(--teal);
     font-family: 'Poppins', sans-serif;
     padding: 10px;
-    margin: 3px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     border-radius: 20px 5px 1px 1px;
     font-weight: bold;
+    margin-right: 2px;
+}
+.uk-text-capitalize:hover {
+    background-color: var(--pink);
+    color: var(--background);
+    border: 2px solid var(--pink);
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    border-radius: 20px 5px 1px 1px;
+    font-weight: bold;
+    margin-right: 2px;
+}
+#search-history {
+    border-bottom: 1px solid var(--teal);
 }
