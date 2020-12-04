@@ -59,7 +59,7 @@ function submitMovieHandler(event) {
 
         //AJZ calling OMDB api and passing it the movie title searched for
         callOmdb(movie);
-        getMovieTrailer(movie);
+       // getMovieTrailer(movie);
         saveMovieHistory(movie);
         UIkit.modal(document.getElementById("movie-modal")).show();
     }
@@ -70,10 +70,12 @@ var callOmdb = function (movie) {
     movieInfo.innerHTML = "";//AJZ clearing previous search results 
     var omdbUrl = "https://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
     fetch(omdbUrl).then(function (response) {
+        //console.log(response.json());
         return response.json();
     }).then(function (data) {
+        //AJZ seeing if the API returned a valid response
+        if (data.Response === "True"){
         //AJZ creating elements to display information about the movie
-
         var movieTitle = document.createElement("h1");//AJZ movie title
         var rating = document.createElement("li");//AJZ movie rating and runtime
         var AndRun = document.createElement("li");//AJZ movie rating and runtime
@@ -102,9 +104,17 @@ var callOmdb = function (movie) {
         movieInfo.appendChild(plotInfo);//AJZ plot
 
         movieInfo.appendChild(castList);//AJZ cast list
-
-
+        //AJZ giving error response to user
+    } else {
+        console.log(JSON.stringify(data.Error));
+        var errorMsg = document.createElement("h1");//AJZ error msg
+        errorMsg.textContent = JSON.stringify("Looks like something went wrong: "
+         + data.Error + " Please try again.");//AJZ error msg
+        movieInfo.appendChild(errorMsg);//AJZ error msg
+    }
     })
+
+  
 };
 
 function saveMovieHistory(movie){
