@@ -68,7 +68,7 @@ function submitMovieHandler(event) {
 // AJZ working on function to call OMDB and return info on a movie
 var callOmdb = function (movie) {
     movieInfo.innerHTML = "";//AJZ clearing previous search results 
-    var omdbUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
+    var omdbUrl = "https://www.omdbapi.com/?t=" + movie + "&plot=full&apikey=" + apiKeyOmdb;
     fetch(omdbUrl).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -105,7 +105,10 @@ var callOmdb = function (movie) {
 
 
     })
+
+    movieInput
 };
 
 //must use keydown for event listener to prevent page from refreshing on enter key pressed
 movieInput.addEventListener("keydown", submitMovieHandler);
+

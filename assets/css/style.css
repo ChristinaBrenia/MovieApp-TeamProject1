@@ -114,3 +114,17 @@ body{
     color: var(--pink);
     transform: scale(1.1);
 }
+
+
+@media screen and (max-width:814px) {
+    div .uk-flex  {
+        
+        display: block;
+        margin: 0 1rem;
+        text-align: center;
+  }
+  .display-none {
+      display: none;
+  }
+}
+
