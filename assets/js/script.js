@@ -5,6 +5,9 @@ var searchedVideoId; //create global variabe for the searched videoid
 var movieInfo = document.querySelector("#movie-info");
 var searchHistoryContainer = document.querySelector("#search-history");
 var movieHistoryArr = JSON.parse(localStorage.getItem("movieHistory")) || []; //get history from local storage or initialize array
+var addToWatchBtn = document.querySelector("#add-to-watch");
+var movieWatchList = JSON.parse(localStorage.getItem("watchList")) || [];
+var omdbDataObject = "";
 
 /*Use the youtube data api to collect video info for the movie search term*/
 var youtubeApiKey = "";
@@ -104,6 +107,8 @@ var callOmdb = function (movie) {
 
             movieInfo.appendChild(castList);//AJZ cast list
             //AJZ giving error response to user
+
+            omdbDataObject = data;
         } 
         else {
             console.log(JSON.stringify(data.Error));
@@ -152,7 +157,14 @@ function movieClickHandler(event) {
     }
 }
 
+function addToWatchListener() {
+    movieWatchList.push(omdbDataObject);
+    localStorage.setItem("watchList", movieWatchList);
+    console.log(localStorage.getItem("watchList"));
+}
+
 //must use keydown for event listener to prevent page from refreshing on enter key pressed
 movieInput.addEventListener("keydown", submitMovieHandler);
 searchHistoryContainer.addEventListener("click", movieClickHandler);
+addToWatchBtn.addEventListener("click", addToWatchListener);
 displayMovieHistory();
