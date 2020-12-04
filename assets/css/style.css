@@ -147,3 +147,16 @@ body{
 #search-history {
     border-bottom: 1px solid var(--teal);
 }
+
+@media screen and (max-width:814px) {
+    div .uk-flex  {
+        
+        display: block;
+        margin: 0 1rem;
+        text-align: center;
+  }
+  .display-none {
+      display: none;
+  }
+}
+
