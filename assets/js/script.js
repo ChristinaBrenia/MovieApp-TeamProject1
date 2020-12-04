@@ -57,7 +57,6 @@ function submitMovieHandler(event) {
         var movie = movieInput.value;
         movieInput.value = "";
 
-        //AJZ calling OMDB api and passing it the movie title searched for
         callOmdb(movie);
         getMovieTrailer(movie);
         saveMovieHistory(movie);
@@ -72,39 +71,50 @@ var callOmdb = function (movie) {
     fetch(omdbUrl).then(function (response) {
         return response.json();
     }).then(function (data) {
-        //AJZ creating elements to display information about the movie
+        //AJZ seeing if the API returned a valid response
+        if (data.Response === "True"){
 
-        var movieTitle = document.createElement("h1");//AJZ movie title
-        var rating = document.createElement("li");//AJZ movie rating and runtime
-        var AndRun = document.createElement("li");//AJZ movie rating and runtime
-        var plotInfo = document.createElement("p"); //AJZ plot
-        var castList = document.createElement("div"); //AJZ cast list
-        var moviePoster = document.createElement("img"); //AJZ movie poster
-        //getting cast list and making an array of names
-        var castRoster = new Array();
-        castRoster = data.Actors.split(",");
-        for (var i = 0; i < castRoster.length; i++) {
-            var cast = document.createElement("h4");
-            cast.textContent = castRoster[i];
-            castList.appendChild(cast);
+            //AJZ creating elements to display information about the movie
+            var movieTitle = document.createElement("h1");//AJZ movie title
+            var rating = document.createElement("li");//AJZ movie rating and runtime
+            var AndRun = document.createElement("li");//AJZ movie rating and runtime
+            var plotInfo = document.createElement("p"); //AJZ plot
+            var castList = document.createElement("div"); //AJZ cast list
+            var moviePoster = document.createElement("img"); //AJZ movie poster
+            //getting cast list and making an array of names
+            var castRoster = new Array();
+            castRoster = data.Actors.split(",");
+            for (var i = 0; i < castRoster.length; i++) {
+                var cast = document.createElement("h4");
+                cast.textContent = castRoster[i];
+                castList.appendChild(cast);
+            }
+
+            movieTitle.textContent = JSON.stringify(data.Title + " " + data.Year); //AJZ movie title
+            rating.textContent = JSON.stringify("Rated: " + data.Rated);//AJZ rating and runtime
+            AndRun.textContent = JSON.stringify("Runtime: " + data.Runtime);//AJZ rating and runtime
+            plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
+            moviePoster.setAttribute("src", data.Poster); //AJZ poster
+
+            movieInfo.appendChild(movieTitle);//AJZ movie title
+            movieInfo.appendChild(rating);//AJZ movie rating and runtime
+            movieInfo.appendChild(AndRun);//AJZ movie rating and runtime
+            movieInfo.appendChild(moviePoster);//AJZ poster
+            movieInfo.appendChild(plotInfo);//AJZ plot
+
+            movieInfo.appendChild(castList);//AJZ cast list
+            //AJZ giving error response to user
+        } 
+        else {
+            console.log(JSON.stringify(data.Error));
+            var errorMsg = document.createElement("h1");//AJZ error msg
+            errorMsg.textContent = JSON.stringify("Looks like something went wrong: "
+            + data.Error + " Please try again.");//AJZ error msg
+            movieInfo.appendChild(errorMsg);//AJZ error msg
         }
-
-        movieTitle.textContent = JSON.stringify(data.Title + " " + data.Year); //AJZ movie title
-        rating.textContent = JSON.stringify("Rated: " + data.Rated);//AJZ rating and runtime
-        AndRun.textContent = JSON.stringify("Runtime: " + data.Runtime);//AJZ rating and runtime
-        plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
-        moviePoster.setAttribute("src", data.Poster); //AJZ poster
-
-        movieInfo.appendChild(movieTitle);//AJZ movie title
-        movieInfo.appendChild(rating);//AJZ movie rating and runtime
-        movieInfo.appendChild(AndRun);//AJZ movie rating and runtime
-        movieInfo.appendChild(moviePoster);//AJZ poster
-        movieInfo.appendChild(plotInfo);//AJZ plot
-
-        movieInfo.appendChild(castList);//AJZ cast list
-
-
     })
+
+  
 };
 
 function saveMovieHistory(movie){
