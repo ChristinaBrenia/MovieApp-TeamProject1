@@ -1,3 +1,4 @@
+
 //global variables
 var apiKeyOmdb = "cefb15b1";
 var movieInput = document.querySelector("#movie-search");
@@ -93,10 +94,10 @@ var callOmdb = function (movie) {
                 castList.appendChild(cast);
             }
 
-            movieTitle.textContent = JSON.stringify(data.Title + " " + data.Year); //AJZ movie title
-            rating.textContent = JSON.stringify("Rated: " + data.Rated);//AJZ rating and runtime
-            AndRun.textContent = JSON.stringify("Runtime: " + data.Runtime);//AJZ rating and runtime
-            plotInfo.textContent = JSON.stringify(data.Plot);//AJZ plot
+            movieTitle.textContent = (data.Title + " " + data.Year); //AJZ movie title
+            rating.textContent = ("Rated: " + data.Rated);//AJZ rating and runtime
+            AndRun.textContent = ("Runtime: " + data.Runtime);//AJZ rating and runtime
+            plotInfo.textContent = (data.Plot);//AJZ plot
             moviePoster.setAttribute("src", data.Poster); //AJZ poster
 
             movieInfo.appendChild(movieTitle);//AJZ movie title
@@ -111,9 +112,8 @@ var callOmdb = function (movie) {
             omdbDataObject = data;
         } 
         else {
-            console.log(JSON.stringify(data.Error));
             var errorMsg = document.createElement("h1");//AJZ error msg
-            errorMsg.textContent = JSON.stringify("Looks like something went wrong: "
+            errorMsg.textContent = ("Looks like something went wrong: "
             + data.Error + " Please try again.");//AJZ error msg
             movieInfo.appendChild(errorMsg);//AJZ error msg
         }
@@ -159,7 +159,7 @@ function movieClickHandler(event) {
 
 function addToWatchListener() {
     movieWatchList.push(omdbDataObject);
-    localStorage.setItem("watchList", movieWatchList);
+    localStorage.setItem("watchList", JSON.stringify(movieWatchList));
     console.log(localStorage.getItem("watchList"));
 }
 
