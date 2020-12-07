@@ -26,11 +26,9 @@ body{
     border-bottom: 1px solid var(--teal); 
 }
 
-/* Remove this after done - pretty sure it does nothing
-.uk-navbar-nav > li.uk-active > a {
-    color: var(--background);
-    background-color:var(--teal);
-} */
+.uk-navbar-nav  {
+    padding: 1rem 1rem 0 1rem ;
+} 
 
 .uk-button-primary {
     background-color: var(--teal);
@@ -44,7 +42,6 @@ body{
     border-radius: 20px 5px 1px 1px;
     font-family: 'Poppins', sans-serif;
     box-shadow: 1px 1px 2px black, 0 0 25px #97588d, 0 0 5px var(--pink);
-
 }
 
 .pink-text {
