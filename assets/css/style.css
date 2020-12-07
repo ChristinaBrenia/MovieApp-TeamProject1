@@ -41,8 +41,10 @@ body{
 .uk-button-primary:hover {
     background-color: var(--pink);
     color: var(--background);
-    border-radius: 20px 1px 1px 1px;
+    border-radius: 20px 5px 1px 1px;
     font-family: 'Poppins', sans-serif;
+    box-shadow: 1px 1px 2px black, 0 0 25px #97588d, 0 0 5px var(--pink);
+
 }
 
 .pink-text {
@@ -61,6 +63,12 @@ body{
 }
 .uk-search-input {
     border-radius: 0.5rem;
+}
+
+/* input hover*/
+.uk-search-input:hover{
+    box-shadow: 1px 1px 2px black, 0 0 25px #97588d, 0 0 5px var(--pink);
+
 }
 
 .uk-width-1-2 {
@@ -86,7 +94,7 @@ body{
 }
 #movie-info img {
     float: left;
-    padding: 0 1rem;
+    padding: 1rem;
 }
 
 #movie-info h4 {
@@ -97,6 +105,8 @@ body{
     background: black;
     border: var(--teal) solid 0.1rem;
     border-radius: 1rem;
+    box-shadow: 1px 1px 2px black, 0 0 25px #2e5856, 0 0 5px var(--teal);
+
 }
 #movie-modal .uk-icon {
     color: var(--teal);
@@ -118,11 +128,45 @@ body{
     border:0.1rem solid var(--teal);
     border-radius: 0.5rem; 
 }
+
+/* Added Box shadow */
 .uk-margin-small-bottom:hover {
     border:0.1rem solid var(--pink);
     color: var(--pink);
-    transform: scale(1.1);
+    transform: scale(1.01);
+    box-shadow: 1px 1px 2px black, 0 0 25px #97588d, 0 0 5px var(--pink);
+
 }
+
+
+p.align-list {
+    width: 25%;
+    display: inline;
+    padding: 1rem;
+    
+}
+
+/* Added styling to uk-card */
+.uk-card {
+    text-align: center;
+    background-color: rgb(20, 20, 20);
+    color: var(--pink);
+    border-radius: 1rem;
+    width: 100%;
+    border: solid 0.1rem var(--teal);
+    box-shadow: 1px 1px 2px black, 0 0 25px #2e5856, 0 0 5px var(--teal);
+    text-shadow: 1px 1px 2px black, 0 0 25px #97588d, 0 0 5px var(--pink);
+    
+   
+}
+
+.uk-card-default .uk-card-title {
+    color: var(--pink);
+    animation: opacityPulse 2s ease-out;
+    animation-iteration-count: infinite; 
+    opacity: 1;
+}
+
 
 .uk-text-capitalize {
     background-color: var(--teal);
@@ -143,6 +187,8 @@ body{
     border-radius: 20px 5px 1px 1px;
     font-weight: bold;
     margin-right: 2px;
+    box-shadow: 1px 1px 2px black, 0 0 25px #97588d, 0 0 5px var(--pink);
+    cursor: pointer;
 }
 #search-history {
     border-bottom: 1px solid var(--teal);
