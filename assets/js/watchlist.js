@@ -1,5 +1,6 @@
 //AJZ adding movie watch list div so it can be addressed
 var movieWatchList = document.querySelector("#movie-watch-list");
+var omdbDataObject = "";
 
 //function to load movies on watch list from storage and display it
 var displayWatchList = function(){
@@ -8,38 +9,46 @@ var displayWatchList = function(){
     
     //looping through all movies in watch list
     for (var j = 0; j < loadWatchList.length; j++){
+        var deleteFromWatchList = document.createElement("button");//AJZ delete button
         var newMovieDiv = document.createElement("div");//AJZ new div to hold movie content
         var movieTitle = document.createElement("h1");//AJZ movie title
-        var rating = document.createElement("li");//AJZ movie rating and runtime
-        var AndRun = document.createElement("li");//AJZ movie rating and runtime
-        var plotInfo = document.createElement("p"); //AJZ plot
-        var castList = document.createElement("div"); //AJZ cast list
         var moviePoster = document.createElement("img"); //AJZ movie poster
-        //getting cast list and making an array of names
-        var castRoster = new Array();
-        castRoster = loadWatchList[j].Actors.split(",");
-        for (var i = 0; i < castRoster.length; i++) {
-            var cast = document.createElement("h4");
-            cast.textContent = castRoster[i];
-            castList.appendChild(cast);
-        }
-
+        
         movieTitle.textContent = (loadWatchList[j].Title + " " + loadWatchList[j].Year); //AJZ movie title
-        rating.textContent = ("Rated: " + loadWatchList[j].Rated);//AJZ rating and runtime
-        AndRun.textContent = ("Runtime: " + loadWatchList[j].Runtime);//AJZ rating and runtime
-        plotInfo.textContent = (loadWatchList[j].Plot);//AJZ plot
         moviePoster.setAttribute("src", loadWatchList[j].Poster); //AJZ poster
+        deleteFromWatchList.textContent = "Delete from watch list";// AJZ delete button
+        //AJZ adding class to decide witch entry to delete and id to add event listener
+        //to button
+        deleteFromWatchList.classList.add(j);//AJZ giving each button a numerical class to select movie to delete
+        deleteFromWatchList.id = "deleteButton"
 
         newMovieDiv.appendChild(movieTitle);//AJZ movie title
-        newMovieDiv.appendChild(rating);//AJZ movie rating and runtime
-        newMovieDiv.appendChild(AndRun);//AJZ movie rating and runtime
         newMovieDiv.appendChild(moviePoster);//AJZ poster
-        newMovieDiv.appendChild(plotInfo);//AJZ plot
-
-        newMovieDiv.appendChild(castList);//AJZ cast list
+        newMovieDiv.appendChild(deleteFromWatchList);// AJZ delete button
         movieWatchList.appendChild(newMovieDiv);
 
     }
 
 }
+//AJZ used as a function for delete buttons
+document.addEventListener("click", function(event){
+    //AJZ determining if a button was the target event
+    if(event.target && event.target.id == "deleteButton"){
+        //loading class of button to select witch movie to delete
+        var deleteSelecetedElement = event.target.className;
+        //AJZ loading local storage to obj
+        omdbDataObject = JSON.parse(localStorage.getItem("watchList"));
+        //AJZ deleting element selected to be deleted
+        omdbDataObject.splice(deleteSelecetedElement,1);
+        //AJZ clearing watch list from local storage
+        localStorage.removeItem("watchList")
+        //AJZ loading the new watch list from obj to local storage
+        localStorage.setItem("watchList", JSON.stringify(omdbDataObject));
+        //AJZ clearing the page to prepare to repopulate the page
+        movieWatchList.innerHTML = "";
+        //AJZ repopulating the page
+        displayWatchList();
+
+    }
+});
 displayWatchList();
