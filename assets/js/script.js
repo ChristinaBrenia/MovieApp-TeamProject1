@@ -13,11 +13,11 @@ var omdbDataObject = "";
 /*Use the youtube data api to collect video info for the movie search term*/
 var youtubeApiKey = "";
 
-function getMovieTrailer(movie) {
+function getMovieTrailer(movie, year) {
     var trailerContentEl = document.querySelector("#youtube-trailer");
     trailerContentEl.src = "";
 
-    movie += " trailer";
+    movie += " " + year + " trailer";
     movie = movie.replace(/ /g, "+");
     //create api url
     var youtubeDataApiURL = "https://www.googleapis.com/youtube/v3/search?part=id&key=" + youtubeApiKey + "&q=" + movie;
@@ -62,7 +62,6 @@ function submitMovieHandler(event) {
         movieInput.value = "";
 
         callOmdb(movie);
-        getMovieTrailer(movie);
         saveMovieHistory(movie);
         UIkit.modal(document.getElementById("movie-modal")).show();
     }
@@ -110,6 +109,7 @@ var callOmdb = function (movie) {
             //AJZ giving error response to user
 
             omdbDataObject = data;
+            getMovieTrailer(data.Title, data.Year);
         } 
         else {
             var errorMsg = document.createElement("h1");//AJZ error msg
@@ -160,7 +160,6 @@ function movieClickHandler(event) {
 function addToWatchListener() {
     movieWatchList.push(omdbDataObject);
     localStorage.setItem("watchList", JSON.stringify(movieWatchList));
-    console.log(localStorage.getItem("watchList"));
 }
 
 //must use keydown for event listener to prevent page from refreshing on enter key pressed

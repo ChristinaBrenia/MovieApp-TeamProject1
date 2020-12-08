@@ -5,8 +5,7 @@ var omdbDataObject = "";
 //function to load movies on watch list from storage and display it
 var displayWatchList = function(){
     loadWatchList = JSON.parse(localStorage.getItem("watchList"));
-    console.log(loadWatchList);
-    
+   
     //looping through all movies in watch list
     for (var j = 0; j < loadWatchList.length; j++){
         var deleteFromWatchList = document.createElement("button");//AJZ delete button
@@ -27,9 +26,13 @@ var displayWatchList = function(){
         newMovieDiv.appendChild(deleteFromWatchList);// AJZ delete button
         movieWatchList.appendChild(newMovieDiv);
 
-    }
 
-}
+        }
+    }
+    
+    
+
+
 //AJZ used as a function for delete buttons
 document.addEventListener("click", function(event){
     //AJZ determining if a button was the target event
