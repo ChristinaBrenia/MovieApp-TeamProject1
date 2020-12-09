@@ -11,11 +11,11 @@ var displayWatchList = function(){
         var deleteFromWatchList = document.createElement("button");//AJZ delete button
             deleteFromWatchList.className = "uk-button uk-button-primary .uk-position-top-center";
         var newMovieDiv = document.createElement("div");//AJZ new div to hold movie content
-            newMovieDiv.className = "uk-container uk-container-expand";
+            newMovieDiv.className = "uk-container uk-container-expand uk-inline";
         var movieTitle = document.createElement("h1");//AJZ movie title
             movieTitle.style.display = 'none';
         var moviePoster = document.createElement("img"); //AJZ movie poster
-            moviePoster.className = "uk-sortable";
+            moviePoster.className = "";
         
         movieTitle.textContent = (loadWatchList[j].Title + " " + loadWatchList[j].Year); //AJZ movie title
         moviePoster.setAttribute("src", loadWatchList[j].Poster); //AJZ poster
