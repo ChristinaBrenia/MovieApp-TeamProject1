@@ -11,7 +11,7 @@ var movieWatchList = JSON.parse(localStorage.getItem("watchList")) || [];
 var omdbDataObject = "";
 
 /*Use the youtube data api to collect video info for the movie search term*/
-var youtubeApiKey = "";
+var youtubeApiKey = "AIzaSyA4BlhB5mPVahDpSC1lLhrGoTy2vI2eEdI";
 
 function getMovieTrailer(movie, year) {
     var trailerContentEl = document.querySelector("#youtube-trailer");
@@ -51,7 +51,8 @@ function onYouTubeIframeAPIReady() {
         width: '640',
         videoId: searchedVideoId,
     });
-    document.getElementById("youtube-trailer").setAttribute("uk-video", "").setAttribute("uk-responsive", "");
+    document.getElementById("youtube-trailer").setAttribute("uk-video","");
+    document.getElementById("youtube-trailer").setAttribute("uk-responsive","");
 }
 
 function submitMovieHandler(event) {
@@ -63,6 +64,7 @@ function submitMovieHandler(event) {
         callOmdb(movie);
         saveMovieHistory(movie);
         UIkit.modal(document.getElementById("movie-modal")).show();
+        
     }
 }
 
@@ -108,7 +110,13 @@ var callOmdb = function (movie) {
             //AJZ giving error response to user
 
             omdbDataObject = data;
-            getMovieTrailer(data.Title, data.Year);
+            //getMovieTrailer(data.Title, data.Year);
+            if(checkWatchList()){
+                addToWatchBtn.textContent = "Added";
+            }
+            else {
+                addToWatchBtn.textContent = "+ to watch list";
+            }
         } 
         else {
             var errorMsg = document.createElement("h1");//AJZ error msg
@@ -150,21 +158,29 @@ function movieClickHandler(event) {
     var movie = event.target.getAttribute("searched-movie");
     if (movie){
         callOmdb(movie);
-        getMovieTrailer(movie);
         saveMovieHistory(movie);
         UIkit.modal(document.getElementById("movie-modal")).show();
     }
 }
 
 function addToWatchList() {
-    //working on duplicate add to watch list
-    var searched = movieWatchList.findIndex(searched => searched.Title === omdbDataObject.Title); //check if movie has already been added for and return index
-
-    if (searched>-1) { //if movie was found remove from array
+    if (checkWatchList()) { //if movie was found don't add to watchList
         return;
     }
+    addToWatchBtn.textContent = "Added";
     movieWatchList.push(omdbDataObject);
     localStorage.setItem("watchList", JSON.stringify(movieWatchList));
+    
+}
+
+function checkWatchList() {
+    var searched = movieWatchList.findIndex(movie => movie.Title == omdbDataObject.Title);
+    if (searched > -1){ 
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 //must use keydown for event listener to prevent page from refreshing on enter key pressed
