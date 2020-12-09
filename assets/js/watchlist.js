@@ -18,7 +18,7 @@ var displayWatchList = function(){
         deleteFromWatchList.textContent = "Delete from watch list";// AJZ delete button
         //AJZ adding class to decide witch entry to delete and id to add event listener
         //to button
-        deleteFromWatchList.classList.add(j);//AJZ giving each button a numerical class to select movie to delete
+        deleteFromWatchList.setAttribute("movieWatchListIndex", j);//AJZ giving each button a numerical class to select movie to delete
         deleteFromWatchList.id = "deleteButton"
 
         newMovieDiv.appendChild(movieTitle);//AJZ movie title
@@ -34,11 +34,12 @@ var displayWatchList = function(){
 
 
 //AJZ used as a function for delete buttons
-document.addEventListener("click", function(event){
+movieWatchList.addEventListener("click", function(event){
     //AJZ determining if a button was the target event
-    if(event.target && event.target.id == "deleteButton"){
-        //loading class of button to select witch movie to delete
-        var deleteSelecetedElement = event.target.className;
+    if(event.target.id == "deleteButton"){
+        //loading attribute of button to select witch movie to delete
+        var deleteSelecetedElement = event.target.getAttribute("movieWatchListIndex");
+        console.log(deleteSelecetedElement);
         //AJZ loading local storage to obj
         omdbDataObject = JSON.parse(localStorage.getItem("watchList"));
         //AJZ deleting element selected to be deleted

@@ -57,7 +57,6 @@ function onYouTubeIframeAPIReady() {
 function submitMovieHandler(event) {
     if (event.keyCode === 13) {
         event.preventDefault();
-
         var movie = movieInput.value;
         movieInput.value = "";
 
@@ -157,7 +156,13 @@ function movieClickHandler(event) {
     }
 }
 
-function addToWatchListener() {
+function addToWatchList() {
+    //working on duplicate add to watch list
+    /*var searched = movieWatchList.indexOf(omdbDataObject); //check if movie has already been searched for and return index
+    console.log(searched);
+    if (searched>-1) { //if movie was found remove from array
+        console.log("test");
+    }*/
     movieWatchList.push(omdbDataObject);
     localStorage.setItem("watchList", JSON.stringify(movieWatchList));
 }
@@ -165,5 +170,5 @@ function addToWatchListener() {
 //must use keydown for event listener to prevent page from refreshing on enter key pressed
 movieInput.addEventListener("keydown", submitMovieHandler);
 searchHistoryContainer.addEventListener("click", movieClickHandler);
-addToWatchBtn.addEventListener("click", addToWatchListener);
+addToWatchBtn.addEventListener("click", addToWatchList);
 displayMovieHistory();
