@@ -148,6 +148,14 @@ body{
     border-bottom: 1px solid var(--teal);
 }
 
+.uk-container img {
+    margin-top: 40px;
+}
+
+.uk-container button {
+    width: 300px;
+}
+
 @media screen and (max-width:814px) {
     div .uk-flex  {
         
