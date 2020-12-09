@@ -48,9 +48,11 @@ function getMovieTrailer(movie, year) {
 var player;
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-trailer', {
+        autoplay: 0,
         height: '390',
         width: '640',
         videoId: searchedVideoId,
+        origin: 'https://nickmay9.github.io/MovieApp-TeamProject1/'
     });
     document.getElementById("youtube-trailer").setAttribute("uk-video","");
     document.getElementById("youtube-trailer").setAttribute("uk-responsive","");
@@ -118,7 +120,7 @@ var callOmdb = function (movie) {
 
             omdbDataObject = data;
             getMovieTrailer(data.Title, data.Year);
-            
+
             if(checkWatchList()){
                 addToWatchBtn.textContent = "Added";
             }
