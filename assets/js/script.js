@@ -7,7 +7,9 @@ var movieInfo = document.querySelector("#movie-info");
 var searchHistoryContainer = document.querySelector("#search-history");
 var movieHistoryArr = JSON.parse(localStorage.getItem("movieHistory")) || []; //get history from local storage or initialize array
 var addToWatchBtn = document.querySelector("#add-to-watch");
-var movieWatchList = JSON.parse(localStorage.getItem("watchList")) || [];
+
+//The search feature does not work without this commented out
+// var movieWatchList = JSON.parse(localStorage.getItem("watchList")) || [];
 var omdbDataObject = "";
 
 /*Use the youtube data api to collect video info for the movie search term*/
@@ -76,7 +78,7 @@ var callOmdb = function (movie) {
         return response.json();
     }).then(function (data) {
         //AJZ seeing if the API returned a valid response
-        if (data.Response === "True"){
+        if (data.Response === "True") {
 
             //AJZ creating elements to display information about the movie
             var movieTitle = document.createElement("h1");//AJZ movie title
@@ -84,12 +86,18 @@ var callOmdb = function (movie) {
             var AndRun = document.createElement("li");//AJZ movie rating and runtime
             var plotInfo = document.createElement("p"); //AJZ plot
             var castList = document.createElement("div"); //AJZ cast list
+            //Dynamic Styling to Cast List with UI features
+            castList.className = "uk-card uk-card-default uk-card-body uk-width-1-2@m";
+            castList.innerHTML = '<h3 class="uk-card-title"><i class="fas fa-theater-masks"></i> Cast</h3>'
+
             var moviePoster = document.createElement("img"); //AJZ movie poster
             //getting cast list and making an array of names
             var castRoster = new Array();
             castRoster = data.Actors.split(",");
             for (var i = 0; i < castRoster.length; i++) {
-                var cast = document.createElement("h4");
+                var cast = document.createElement("p");
+                //add UI styling
+                cast.className = "align-list";
                 cast.textContent = castRoster[i];
                 castList.appendChild(cast);
             }
@@ -121,34 +129,34 @@ var callOmdb = function (movie) {
         else {
             var errorMsg = document.createElement("h1");//AJZ error msg
             errorMsg.textContent = ("Looks like something went wrong: "
-            + data.Error + " Please try again.");//AJZ error msg
+                + data.Error + " Please try again.");//AJZ error msg
             movieInfo.appendChild(errorMsg);//AJZ error msg
         }
     })
 
-  
+
 };
 
-function saveMovieHistory(movie){
+function saveMovieHistory(movie) {
     var searched = movieHistoryArr.indexOf(movie); //check if movie has already been searched for and return index
-    if (searched>-1) { //if movie was found remove from array
+    if (searched > -1) { //if movie was found remove from array
         movieHistoryArr.splice(searched, 1);
     }
     movieHistoryArr.push(movie);
-    if(movieHistoryArr.length>10){ //keep only the 10 most recent searches
+    if (movieHistoryArr.length > 10) { //keep only the 10 most recent searches
         movieHistoryArr.shift();
     }
     localStorage.setItem("movieHistory", JSON.stringify(movieHistoryArr));
     displayMovieHistory();
 }
 
-function displayMovieHistory(){
+function displayMovieHistory() {
     searchHistoryContainer.innerHTML = "";
-    for (var i=1; i<= movieHistoryArr.length; i++){
+    for (var i = 1; i <= movieHistoryArr.length; i++) {
         var buttonEl = document.createElement("button");
         buttonEl.classList.add("uk-text-capitalize");
-        buttonEl.setAttribute("searched-movie", movieHistoryArr[movieHistoryArr.length-i]);
-        buttonEl.textContent = movieHistoryArr[movieHistoryArr.length-i];
+        buttonEl.setAttribute("searched-movie", movieHistoryArr[movieHistoryArr.length - i]);
+        buttonEl.textContent = movieHistoryArr[movieHistoryArr.length - i];
 
         searchHistoryContainer.appendChild(buttonEl);
     }
@@ -156,7 +164,7 @@ function displayMovieHistory(){
 
 function movieClickHandler(event) {
     var movie = event.target.getAttribute("searched-movie");
-    if (movie){
+    if (movie) {
         callOmdb(movie);
         saveMovieHistory(movie);
         UIkit.modal(document.getElementById("movie-modal")).show();
