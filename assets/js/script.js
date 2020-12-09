@@ -110,7 +110,7 @@ var callOmdb = function (movie) {
             //AJZ giving error response to user
 
             omdbDataObject = data;
-            //getMovieTrailer(data.Title, data.Year);
+            getMovieTrailer(data.Title, data.Year);
             if(checkWatchList()){
                 addToWatchBtn.textContent = "Added";
             }
