@@ -8,8 +8,7 @@ var searchHistoryContainer = document.querySelector("#search-history");
 var movieHistoryArr = JSON.parse(localStorage.getItem("movieHistory")) || []; //get history from local storage or initialize array
 var addToWatchBtn = document.querySelector("#add-to-watch");
 
-//The search feature does not work without this commented out
-// var movieWatchList = JSON.parse(localStorage.getItem("watchList")) || [];
+var movieWatchList = JSON.parse(localStorage.getItem("watchList")) || [];
 var omdbDataObject = "";
 
 /*Use the youtube data api to collect video info for the movie search term*/
@@ -119,6 +118,7 @@ var callOmdb = function (movie) {
 
             omdbDataObject = data;
             getMovieTrailer(data.Title, data.Year);
+            
             if(checkWatchList()){
                 addToWatchBtn.textContent = "Added";
             }
