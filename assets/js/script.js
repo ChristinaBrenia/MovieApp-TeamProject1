@@ -158,10 +158,10 @@ function movieClickHandler(event) {
 
 function addToWatchList() {
     //working on duplicate add to watch list
-    var searched = movieWatchList.indexOf(omdbDataObject); //check if movie has already been searched for and return index
-    console.log(searched);
+    var searched = movieWatchList.findIndex(searched => searched.Title === omdbDataObject.Title); //check if movie has already been added for and return index
+
     if (searched>-1) { //if movie was found remove from array
-        console.log("test");
+        return;
     }
     movieWatchList.push(omdbDataObject);
     localStorage.setItem("watchList", JSON.stringify(movieWatchList));
